@@ -16,25 +16,25 @@ Latest：[目录]()
 
 ----------------------------
 
-# 🐳 Go
+# 😶 Go
 
 | Project | Article                                                                              |
 | :-----: | :----------------------------------------------------------------------------------- |
-|   Go    | [new与make的区别以及内存的分配](./contents/Golang/newMakeAndMemoryAllocation.md)<br> |
+|   Go    | [new与make的区别以及内存的分配](./contents/Golang/newMakeAndMemoryAllocation.md)<br>[由变量名在内存中存放的位置引发的思考](./contents/Golang/variableAndMemory.md)
 
-# 🐳 MongoDB
+# 🤤 MongoDB
 
 | Project | Article |
 | :-----: | :------ |
 | MongoDB | <br>    |
 
-# 🐳 MySQL
+# 😅 MySQL
 
 | Project | Article                                                                    |
 | :-----: | :------------------------------------------------------------------------- |
 |  MySQL  | [理解 MySQL 中的四种隔离级别](./contents/MySQL/fourIsolationLevels.md)<br> |
 
-# 🐳 OS
+# 😏 OS
 
 | Project | Article |
 | :-----: | :------ |
