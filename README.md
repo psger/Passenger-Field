@@ -20,7 +20,7 @@ Latest：[目录]()
 
 | Project | Article                                                                              |
 | :-----: | :----------------------------------------------------------------------------------- |
-|   Go    | [new 与 make 的区别以及内存的分配](./contents/Golang/newMakeAndMemoryAllocation.md)<br>[由变量名在内存中存放的位置引发的思考](./contents/Golang/variableAndMemory.md)
+|   Go    | [new 与 make 的区别以及内存的分配](./contents/Golang/newMakeAndMemoryAllocation.md)<br>[由变量名在内存中存放的位置引发的思考](./contents/Golang/variableAndMemory.md)<br>[slice 少踩坑使用总结](./contents/Golang/slice.md)
 
 # 🤤 MongoDB
 
