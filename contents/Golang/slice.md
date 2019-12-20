@@ -127,7 +127,6 @@ func BenchmarkTestAppend2(b *testing.B) {
 	}
 	fmt.Println(len(a))
 }
-1
 // goos: linux
 // goarch: amd64
 // BenchmarkTestAppend1-4          100
