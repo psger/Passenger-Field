@@ -24,6 +24,8 @@ Latest：[目录]()
 |         | [由变量名在内存中存放的位置引发的思考](./contents/Golang/variableAndMemory.md)
 |         | [slice 少踩坑使用总结](./contents/Golang/slice.md)
 |         | [逃逸分析](https://www.notion.so/psgernote/001300dbdf5e4608be64038cc7bbfde4)
+|         | [defer 调用原理](https://www.notion.so/psgernote/defer-6cecee3f715f433dbfd949c4be4c6e6d)
+
 # 😅 MySQL
 
 | Project | Article                                                                    |
