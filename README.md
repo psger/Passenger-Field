@@ -20,14 +20,10 @@ Latest：[目录]()
 
 | Project | Article                                                                              |
 | :-----: | :----------------------------------------------------------------------------------- |
-|   Go    | [new 与 make 的区别以及内存的分配](./contents/Golang/newMakeAndMemoryAllocation.md)<br>[由变量名在内存中存放的位置引发的思考](./contents/Golang/variableAndMemory.md)<br>[slice 少踩坑使用总结](./contents/Golang/slice.md)
-
-# 🤤 MongoDB
-
-| Project | Article |
-| :-----: | :------ |
-| MongoDB | <br>    |
-
+|   Go    | [new 与 make 的区别以及内存的分配](./contents/Golang/newMakeAndMemoryAllocation.md)
+|         | [由变量名在内存中存放的位置引发的思考](./contents/Golang/variableAndMemory.md)
+|         | [slice 少踩坑使用总结](./contents/Golang/slice.md)
+|         | [逃逸分析](https://www.notion.so/psgernote/001300dbdf5e4608be64038cc7bbfde4)
 # 😅 MySQL
 
 | Project | Article                                                                    |
@@ -38,10 +34,11 @@ Latest：[目录]()
 
 | Project | Article |
 | :-----: | :------ |
-|   OS    | [为什么说线程调度比进程调度开销更小](./contents/OperatingSystem/processesAndThreads.md)<br>[如何用 Cgroup 来限制一个进程的 CPU 资源](./con/../contents/OperatingSystem/Cgroup.md)    |
+|   OS    | [为什么说线程调度比进程调度开销更小](./contents/OperatingSystem/processesAndThreads.md)
+|         | [如何用 Cgroup 来限制一个进程的 CPU 资源](./con/../contents/OperatingSystem/Cgroup.md)    |
 
 # 😏 Useful
 
 | Project | Article |
 | :-----: | :------ |
-|   Useful    | [Iterm2 中设置代理](contents/useful/proxyInIterm2.md)<br>    |
+| Useful  | [Iterm2 中设置代理](contents/useful/proxyInIterm2.md)<br>    |
