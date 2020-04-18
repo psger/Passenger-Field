@@ -44,3 +44,9 @@ Latest：[目录]()
 | Project | Article |
 | :-----: | :------ |
 | Useful  | [Iterm2 中设置代理](contents/useful/proxyInIterm2.md)<br>    |
+
+# 🤔 Why
+
+| Project | Article |
+| :-----: | :------ |
+| Why  | |
