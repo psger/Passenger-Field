@@ -1,13 +1,14 @@
 ### slice 使用技巧及原理
 
-- slice 的截取
+### slice 的截取
+- slice 截取第一个 🌰
 ```golang
 a := make([]int, 10)
 b := a[2:7] // 不包含第七个元素
 fmt.Println(cap(b)) // 8
 fmt.Println(len(b)) // 5
 ```
-- slice 截取第二个例子
+- slice 截取第二个 🌰
 ```golang
 func main() {
     orderLen := 5
@@ -22,7 +23,7 @@ func main() {
     fmt.Println("cap(lockorder) = ", cap(lockorder)) // 5
 }
 ```
-- slice 排序
+### slice 排序
 ```golang
 func main() {
     ps := []struct {
@@ -40,7 +41,7 @@ func main() {
     fmt.Println(ps)
 }
 ```
-- 完美的 clone 一个切片
+### 完美的 clone 一个切片
 ```go
 // 普通方式
 a := []int{1,2,3,4,5,6,7,8}
@@ -51,7 +52,7 @@ copy(b, a)
  b := append(a[:0:0], a...)
 ```
 
-第一轮基准测试
+- 第一轮基准测试
 
 ```golang
 func BenchmarkSlice1(b *testing.B) {
@@ -76,7 +77,7 @@ func BenchmarkSlice2(b *testing.B) {
 // PASS
 // ok      _/home/t04884/Documents/tmp     2.391s
 ```
-第二轮基准测试
+- 第二轮基准测试
 ```golang
 func BenchmarkSlice1(b *testing.B) {
 	a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
@@ -99,7 +100,7 @@ func BenchmarkSlice2(b *testing.B) {
 // PASS
 // ok      _/home/t04884/Documents/tmp     2.991s
 ```
-第三轮基准测试
+- 第三轮基准测试
 ```golang
 func BenchmarkSlice1(b *testing.B) {
 	a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
@@ -219,7 +220,7 @@ func SliceInt2String3(s []int) string {
 // PASS
 // ok      github.com/thinkeridea/example/slice    5.928s
 ```
-- append 与 copy
+### append 与 copy
 - 为什么 append 操作扩容时开销很大
     - 扩容后内存地址会发生改变，并且把原有的复制到新分配的内存中，旧的内存会被回收
     - 切片 a 创建一个子 b，这时候 a 发生了 append 操作扩容了，也就是内存地址发生了改变，那么 b 的底层指向的哪一块内存呢？
@@ -242,9 +243,9 @@ func main() {
 ```
 从上面代码运行结果可以看到，扩容之后的切片指向了新的地址，之前的子切片还是指向旧的地址。所以之后对父切片的操作不会影响子切片。
 
-- append 扩容
-    - 当切片底层数组大小小于 1024 时，扩容翻倍。
-    - 当切片底层数组大小大于 1024 时，扩容 25%。
+### append 扩容
+- 当切片底层数组大小小于 1024 时，扩容翻倍。
+- 当切片底层数组大小大于 1024 时，扩容 25%。
 
 实际是这样吗？看 slice 扩容的[源码](https://github.com/golang/go/blob/master/src/runtime/slice.go#L76)：
 ```go
@@ -354,7 +355,7 @@ func roundupsize(size uintptr) uintptr {
 }
 ```
 
-看个例子：
+- 看个例子：
 ```go
 s := []int{1,2}
 s = append(s,4,5,6)
@@ -369,3 +370,62 @@ size_to_class8：1 1 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 11 11...
 class_to_size：0 8 16 32 48 64 80 96 112 128 144 160 176 192 208 224 240 256...
        因此得到最小的对齐内存是48字节。完成内存对齐计算后，重新计算应有的容量，也就是48/8 = 6。扩容得到的容量就是6了。
 这里没有弄明白的是，为什么要先查内存对齐表再查 class_to_size。
+
+### append 为什么需要保留返回值
+- 先看一段简单的代码
+
+```go
+type Slice []int
+
+func (A Slice) Append(value int) {
+	A = append(A, value)
+}
+
+func main() {
+	mSlice := make(Slice, 10, 20)
+	mSlice.Append(5)
+	fmt.Println(mSlice) // 00000000...
+}
+```
+为什么输出的结构中没有 5 呢？根本原因是 append 后的 slice 已经不是原来的 slice 了。
+打印出 append 返回的 slice 与 A 的指针是否相同：
+```go
+func (A Slice)Append(value int) {
+	A1 := append(A, value)
+	fmt.Printf("%p\n%p\n",A,A1)
+}
+```
+可以发现返回的指针相同，那为什么说 append 返回的 slice 不是原来的 slice 呢？
+看 slice 的数据结构 sliceHeader：
+```go
+type SliceHeader struct {
+	Data uintptr
+	Len  int
+	Cap  int
+}
+```
+可以发现，虽然指向的底层数组可以一样，但是只要 cap 或者 len 有一个不同都不算是同一个 slice。append 之后，slice 的 len 发生了改变，所以与原来的 slice 不是同一个 slice。  
+就算是 执行了 `A = append(A, value)` 也只是拷贝了一个副本，原来的 A 的改变只在 append 内生效，mSlice 本身没有改变。如果把 mSlice 的 cap 改为 10，append 时会发生扩容，指向底层数组的指针也会发生改变。  
+```go
+func (A Slice)Append(value int) {
+	A1 := append(A, value)
+
+	sh:=(*reflect.SliceHeader)(unsafe.Pointer(&A))
+	fmt.Printf("A Data:%d,Len:%d,Cap:%d\n",sh.Data,sh.Len,sh.Cap)
+
+	sh1:=(*reflect.SliceHeader)(unsafe.Pointer(&A1))
+	fmt.Printf("A1 Data:%d,Len:%d,Cap:%d\n",sh1.Data,sh1.Len,sh1.Cap)
+}
+
+func main() {
+	mSlice := make(Slice, 10, 10)
+	mSlice.Append(5)
+	fmt.Println(mSlice)
+}
+
+// A  Data:824633835680,Len:10,Cap:10
+// A1 Data:824634204160,Len:11,Cap:20
+```
+### ref
+- [slice 扩容规则](https://jodezer.github.io/2017/05/golangSlice%E7%9A%84%E6%89%A9%E5%AE%B9%E8%A7%84%E5%88%99)
+- [Go语言slice的本质-SliceHeader](https://juejin.im/post/5c2a1e446fb9a049df242997)
